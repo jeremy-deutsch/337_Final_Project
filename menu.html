@@ -3,31 +3,49 @@
 	<title>We made an idle game!</title>
 </head>
 <body>
-	<p>You've written <div id="lines">0</div> lines of code!</p>
+	<p>You've written <label id="lines">0</label> lines of code!</p>
+    <p>You've grown <label id="hands">0</label> extra hands.</p>
+    <p>You've had <label id="cups">0</label> cups of coffee.</p>
+	<p>You've been coding for <label id="seconds">0</label> seconds.</p>
+	<button id="powerUpButton" onclick="powerUp()">Power Up!</button>
+	<button id="speedUpButton" onclick="speedUp(1)">Speed Up!</button>
+	<button id="superSpeedUpButton" onclick="speedUp(5)">Speed Up!!!!</button>
     <script type="text/javascript">
-        var minutesLabel = document.getElementById("minutes");
-        var secondsLabel = document.getElementById("seconds");
-        var totalSeconds = 0;
-        setInterval(setTime, 1000);
+        var lines = document.getElementById("lines");
+        var hands = document.getElementById("hands");
+        var cups = document.getElementById("cups");
+        var linesPer = 1;
+        var totalLines = 0;
+        var speed = 1000;
+        var coffee = 0;
+        setInterval(setLines, 1000);
 
-        function setTime()
-        {
-            ++totalSeconds;
-            secondsLabel.innerHTML = pad(totalSeconds%60);
-            minutesLabel.innerHTML = pad(parseInt(totalSeconds/60));
+        var seconds = document.getElementById("seconds");
+        var time = 0;
+
+        setInterval(setSeconds, 1000);
+
+        function setLines() {
+            totalLines += linesPer;
+            lines.innerHTML = totalLines;
         }
 
-        function pad(val)
-        {
-            var valString = val + "";
-            if(valString.length < 2)
-            {
-                return "0" + valString;
+        function powerUp() {
+        	linesPer++;
+            hands.innerHTML = linesPer - 1;
+        }
+
+        function speedUp(x) {
+            for (var i = 0; i < x; i++) {
+        	   setInterval(setLines, 1000);
+               coffee++;
+               cups.innerHTML = coffee;
             }
-            else
-            {
-                return valString;
-            }
+        }
+
+        function setSeconds() {
+        	time++;
+        	seconds.innerHTML = time;
         }
     </script>
 </body>
