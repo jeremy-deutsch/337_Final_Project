@@ -15,3 +15,9 @@ CREATE TABLE button_amounts (
         button_4 int not null,
         button_5 int not null
 );
+
+CREATE TABLE currency (
+    username varchar(15),
+    money_amount int not null,
+    line_amount int not null
+);
