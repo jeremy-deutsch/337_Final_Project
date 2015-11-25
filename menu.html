@@ -1,51 +1,122 @@
 <html>
 <head>
 	<title>We made an idle game!</title>
+    
+    <style type="text/css">
+    button {
+        visibility: hidden;
+    }
+
+    #sellCodeButton {
+        visibility: visible;
+    }
+    </style>
+
 </head>
 <body>
 	<p>You've written <label id="lines">0</label> lines of code!</p>
     <p>You've grown <label id="hands">0</label> extra hands.</p>
     <p>You've had <label id="cups">0</label> cups of coffee.</p>
 	<p>You've been coding for <label id="seconds">0</label> seconds.</p>
-	<button id="powerUpButton" onclick="powerUp()">Power Up!</button>
-	<button id="speedUpButton" onclick="speedUp(1)">Speed Up!</button>
-	<button id="superSpeedUpButton" onclick="speedUp(5)">Speed Up!!!!</button>
+    <p>You've made $<label id="money">0</label>.</p>
+    <button id="sellCodeButton" onclick="sellCode()" style>Sell Code for $<label id="codeValue">0</label></button>
+	<button id="powerUpButton" onclick="powerUp(1, 5)">Power Up! ($5)</button>
+	<button id="speedUpButton" onclick="speedUp(1, 8)">Speed Up! ($8)</button>
+	<button id="superPowerUpButton" onclick="powerUp(5, 20)">Power Up!!!! ($20)</button>
     <script type="text/javascript">
+        var codeValue = document.getElementById("codeValue");
         var lines = document.getElementById("lines");
         var hands = document.getElementById("hands");
         var cups = document.getElementById("cups");
+        var money = document.getElementById("money");
+
+        var sellCodeButton = document.getElementById("sellCodeButton");
+        var powerUpButton = document.getElementById("powerUpButton");
+        var speedUpButton = document.getElementById("speedUpButton");
+        var superPowerUpButton = document.getElementById("superPowerUpButton");
+
+        var cash = 0.00;
+        var codeDollars = 0.00;
         var linesPer = 1;
         var totalLines = 0;
-        var speed = 1000;
+        var counter = 0;
+        var speed = 10;
         var coffee = 0;
-        setInterval(setLines, 1000);
+        setInterval(update, 100);
+
+        var numButtons = 0;
+        var buttonCosts = [5, 8, 20];
+        var buttonsArray = [powerUpButton, speedUpButton, superPowerUpButton];
 
         var seconds = document.getElementById("seconds");
         var time = 0;
 
         setInterval(setSeconds, 1000);
 
+        function update() {
+            counter++;
+            if (counter >= speed) {
+                totalLines += linesPer;
+                lines.innerHTML = totalLines;
+                codeDollars = totalLines;// * (1.00001^totalLines);
+                codeValue.innerHTML = codeDollars;
+                counter = 0;
+            }
+        }
+
         function setLines() {
             totalLines += linesPer;
             lines.innerHTML = totalLines;
         }
 
-        function powerUp() {
-        	linesPer++;
+        function powerUp(power, cost) {
+        	if (cash >= (cost)) {
+                cash -= cost;
+                linesPer += power;
+                money.innerHTML = cash;
+            }
             hands.innerHTML = linesPer - 1;
         }
 
-        function speedUp(x) {
-            for (var i = 0; i < x; i++) {
-        	   setInterval(setLines, 1000);
-               coffee++;
-               cups.innerHTML = coffee;
+        function speedUp(accel, cost) {
+            
+            if (cash >= cost) {
+                cash -= cost;
+                money.innerHTML = cash;
+                for (var i = 0; i < accel; i++) {
+                    speed = speed/2;
+                    coffee++;
+                }
+                cups.innerHTML = coffee;
             }
         }
 
         function setSeconds() {
         	time++;
         	seconds.innerHTML = time;
+        }
+
+        function sellCode() {
+            cash += codeDollars;
+            codeDollars = 0;
+            totalLines = 0;
+            money.innerHTML = cash;
+            lines.innerHTML = 0;
+            codeValue.innerHTML = 0;
+            checkButtons();
+        }
+
+        function checkButtons() {
+            var buttonsFull = false;
+            while(!buttonsFull) {
+                if (numButtons < buttonCosts.length && cash >= buttonCosts[numButtons]) {
+                    buttonsArray[numButtons].style.visibility = "visible";
+                    numButtons++;
+                }
+                else {
+                    buttonsFull = true;
+                }
+            }
         }
     </script>
 </body>
