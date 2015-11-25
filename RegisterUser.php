@@ -1,17 +1,15 @@
 <html>
     <head> Create New User </head>
     <body>
-
         <form method="post">
-            <input type="text" name="newUser" required>
-            <input type="text" name="newPass" required>
+            New Username: <input type="text" name="newUser" required>
+            New Password: <input type="text" name="newPass" required>
             <input type="submit" name="submit" value="submit">
         </form>
     </body>
 </html>
 
 <?php
-
     $db = 'mysql:dbname=idlegame;host=127.0.0.1';
     $user = 'root';
     $pass = '';
@@ -26,29 +24,40 @@
     }
 
     if(isset($_POST['submit'])) {
+
         $user = $_POST['newUser'];
         $pass = $_POST['newPass'];
+
+        register($user, $pass);
+
+        if(verified($user, $pass)) {
+            echo 'User created. Go back to login';
+        }
+        else {
+            echo 'Error: failed to create user';
+        }
     }
 
-    register($user, $pass);
-    if(verified($user, $pass) == true) {
-        echo 'User created. Go back to login';
-    }
-    else {
-        echo 'Error: failed to create user';
-    }
 
 
 
-    public function verify($username, $password) {
+
+    function verified($username, $password) {
+        global $db;
         $stmt = $db->prepare("SELECT password FROM users WHERE username='$username';");
         $stmt->execute();
         $hash = $stmt->fetchColumn();
 
+        echo $username . '----<br>';
+        echo $password . '----<br>';
+        echo '<br>       *--- ' . $hash . ' ---*       ';
+
         return password_verify($password,  $hash);
     }
 
-    public function register($username, $password) {
+    function register($username, $password) {
+        global $db;
+
         $currentTime = time();
         $hash = password_hash($password, PASSWORD_DEFAULT);
 
@@ -57,8 +66,8 @@
         $numUsers = $stmt->fetchColumn();
 
         if($numUsers == "0" ) {
-            $sql = "INSERT INTO users(username, password, login) VALUES('$user', '$hash', '$currentTime')";
-            $db->execute($sql);
+            $sql = "INSERT INTO users(username, password, login) VALUES('$username', '$hash', '$currentTime')";
+            $db->exec($sql);
         }
         else {
             echo "Username already exists";
