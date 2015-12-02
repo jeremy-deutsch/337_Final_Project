@@ -21,8 +21,9 @@
     <p>You've made $<label id="money">0</label>.</p>
     <button id="sellCodeButton" onclick="sellCode()" style>Sell Code for $<label id="codeValue">0</label></button>
 	<button id="powerUpButton" onclick="powerUp(1, powerUpCost)">Power Up! ($<label id="powerUpPrice">5</label>)</button>
-	<button id="speedUpButton" onclick="speedUp(1, speedUpCost)">Speed Up! ($<label id="speedUpPrice">12</label>)</button>
-	<button id="superPowerUpButton" onclick="powerUp(5, powerUpCost*4)">Power Up!!!! ($<label id="superPowerUpPrice">20</label>)</button>
+	<button id="speedUpButton" onclick="speedUp(1, speedUpCost)">Speed Up! ($<label id="speedUpPrice">15</label>)</button>
+	<button id="superPowerUpButton" onclick="powerUp(5, powerUpCost*4)">Power Up x5 ($<label id="superPowerUpPrice">20</label>)</button>
+    <button id="powerUpTwentyButton" onclick="powerUp(20, powerUpCost*12)">Power Up x20 ($<label id="powerUpTwentyPrice">60</label>)</button>
     <script type="text/javascript">
         var codeValue = document.getElementById("codeValue");
         var lines = document.getElementById("lines");
@@ -35,6 +36,7 @@
         var powerUpButton = document.getElementById("powerUpButton");
         var speedUpButton = document.getElementById("speedUpButton");
         var superPowerUpButton = document.getElementById("superPowerUpButton");
+        var powerUpTwentyButton = document.getElementById("powerUpTwentyButton");
 
 
         var powerUpPrice = document.getElementById("powerUpPrice");
@@ -42,6 +44,7 @@
         var speedUpPrice = document.getElementById("speedUpPrice");
         var speedUpCost = 15;
         var superPowerUpPrice = document.getElementById("superPowerUpPrice");
+        var powerUpTwentyPrice = document.getElementById("powerUpTwentyPrice");
 
         var cash = 0.00;
         var codeDollars = 0.0000;
@@ -53,8 +56,8 @@
         setInterval(update, 100);
 
         var numButtons = 0;
-        var buttonCosts = [5, 15, 20];
-        var buttonsArray = [powerUpButton, speedUpButton, superPowerUpButton];
+        var buttonCosts = [powerUpCost, speedUpCost, powerUpCost * 4, powerUpCost * 12];
+        var buttonsArray = [powerUpButton, speedUpButton, superPowerUpButton, powerUpTwentyButton];
 
         var seconds = document.getElementById("seconds");
         var time = 0;
@@ -72,7 +75,7 @@
                 totalLines += linesPer;
                 lines.innerHTML = totalLines;
                 codeDollars = (totalLines * (Math.pow(1.0000001, totalLines)));
-                codeDollars = Math.floor(codeDollars * 100) / 100;
+                codeDollars = dollars(codeDollars);
                 //console.log("multiplier: " + Math.pow(1.0000001, totalLines));
                 codeValue.innerHTML = codeDollars;
                 counter = 0;
@@ -91,9 +94,10 @@
                 for (var i = 0; i < power; i++) {
                     powerUpCost *= 1.05;
                 }                
-                powerUpCost = Math.floor(powerUpCost * 100) / 100;
+                powerUpCost = dollars(powerUpCost);
                 powerUpPrice.innerHTML = powerUpCost;
-                superPowerUpPrice.innerHTML = powerUpCost * 4;
+                superPowerUpPrice.innerHTML = dollars(powerUpCost * 4);
+                powerUpTwentyPrice.innerHTML = dollars(powerUpCost * 12);
                 cash = Math.floor(cash * 100) / 100;
                 money.innerHTML = cash;
             }
@@ -104,7 +108,7 @@
             
             if (cash >= cost) {
                 cash -= cost;
-                cash = Math.floor(cash * 100) / 100;
+                cash = dollars(cash);
                 money.innerHTML = cash;
                 for (var i = 0; i < accel; i++) {
                     speed = speed/2;
@@ -127,7 +131,7 @@
 
         function sellCode() {
             cash += codeDollars;
-            cash = Math.floor(cash * 100) / 100;
+            cash = dollars(cash);
             codeDollars = 0;
             totalLines = 0;
             money.innerHTML = cash;
@@ -147,6 +151,10 @@
                     buttonsFull = true;
                 }
             }
+        }
+
+        function dollars(num) {
+            return Math.floor(num * 100) / 100;
         }
     </script>
 </body>
