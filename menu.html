@@ -79,8 +79,7 @@
             if (counter >= speed) {
                 totalLines += linesPer;
                 lines.innerHTML = totalLines;
-                codeDollars = (totalLines * (Math.pow(1.0000001, totalLines)));
-                codeDollars = dollars(codeDollars);
+                codeDollars = dollars(totalLines * (Math.pow(1.000001, totalLines)));
                 //console.log("multiplier: " + Math.pow(1.0000001, totalLines));
                 codeValue.innerHTML = codeDollars;
                 counter = 0;
@@ -97,7 +96,7 @@
                 cash -= cost;
                 linesPer += power;
                 for (var i = 0; i < power; i++) {
-                    powerUpCost *= 1.02;
+                    powerUpCost *= 1.01;
                 }                
                 powerUpCost = dollars(powerUpCost);
                 powerUpPrice.innerHTML = powerUpCost;
@@ -157,7 +156,7 @@
                     buttonsFull = true;
                 }
             }
-            if (cash >= (powerUpCost * extraPowerCost)) {
+            while (cash >= (powerUpCost * extraPowerCost)) {
                 extraPowerUps.innerHTML += "<button class=\"extraPowerUpButton\" onclick=\"powerUp(" + extraPowerMultiplier + ", powerUpCost*" + extraPowerCost + ")\">Power Up x" + extraPowerMultiplier + " ($<label class=\"extraPowerPrice\">" + dollars(extraPowerCost*powerUpCost) + "</label>)</button> ";
                 extraPowerMultiplier *= 4;
                 extraPowerCost *= 3;
