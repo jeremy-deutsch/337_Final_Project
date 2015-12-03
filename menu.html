@@ -10,6 +10,10 @@
     #sellCodeButton {
         visibility: visible;
     }
+
+    .extraPowerUpButton {
+        visibility: visible;
+    }
     </style>
 
 </head>
@@ -21,9 +25,8 @@
     <p>You've made $<label id="money">0</label>.</p>
     <button id="sellCodeButton" onclick="sellCode()" style>Sell Code for $<label id="codeValue">0</label></button>
 	<button id="powerUpButton" onclick="powerUp(1, powerUpCost)">Power Up! ($<label id="powerUpPrice">5</label>)</button>
-	<button id="speedUpButton" onclick="speedUp(1, speedUpCost)">Speed Up! ($<label id="speedUpPrice">15</label>)</button>
-	<button id="superPowerUpButton" onclick="powerUp(5, powerUpCost*4)">Power Up x5 ($<label id="superPowerUpPrice">20</label>)</button>
-    <button id="powerUpTwentyButton" onclick="powerUp(20, powerUpCost*12)">Power Up x20 ($<label id="powerUpTwentyPrice">60</label>)</button>
+	<button id="speedUpButton" onclick="speedUp(1, speedUpCost)">Speed Up! ($<label id="speedUpPrice">15</label>)</button><br><br>
+    <div id="extraPowerUps"></div>
     <script type="text/javascript">
         var codeValue = document.getElementById("codeValue");
         var lines = document.getElementById("lines");
@@ -43,11 +46,13 @@
         var powerUpCost = 5;
         var speedUpPrice = document.getElementById("speedUpPrice");
         var speedUpCost = 15;
-        var superPowerUpPrice = document.getElementById("superPowerUpPrice");
-        var powerUpTwentyPrice = document.getElementById("powerUpTwentyPrice");
+
+        var extraPowerMultiplier = 5;
+        var extraPowerCost = 4;
+        var extraPowerUps = document.getElementById("extraPowerUps");
 
         var cash = 0.00;
-        var codeDollars = 0.0000;
+        var codeDollars = 0.00;
         var linesPer = 1;
         var totalLines = 0.00;
         var counter = 0;
@@ -56,8 +61,8 @@
         setInterval(update, 100);
 
         var numButtons = 0;
-        var buttonCosts = [powerUpCost, speedUpCost, powerUpCost * 4, powerUpCost * 12];
-        var buttonsArray = [powerUpButton, speedUpButton, superPowerUpButton, powerUpTwentyButton];
+        var buttonCosts = [powerUpCost, speedUpCost];
+        var buttonsArray = [powerUpButton, speedUpButton];
 
         var seconds = document.getElementById("seconds");
         var time = 0;
@@ -92,12 +97,13 @@
                 cash -= cost;
                 linesPer += power;
                 for (var i = 0; i < power; i++) {
-                    powerUpCost *= 1.05;
+                    powerUpCost *= 1.02;
                 }                
                 powerUpCost = dollars(powerUpCost);
                 powerUpPrice.innerHTML = powerUpCost;
-                superPowerUpPrice.innerHTML = dollars(powerUpCost * 4);
-                powerUpTwentyPrice.innerHTML = dollars(powerUpCost * 12);
+                for (var i = 0; i < document.getElementsByClassName("extraPowerPrice").length; i++) {
+                    document.getElementsByClassName("extraPowerPrice")[i].innerHTML = dollars(powerUpCost * 4 * Math.pow(3, i));
+                }
                 cash = Math.floor(cash * 100) / 100;
                 money.innerHTML = cash;
             }
@@ -149,6 +155,14 @@
                 }
                 else {
                     buttonsFull = true;
+                }
+            }
+            if (cash >= (powerUpCost * extraPowerCost)) {
+                extraPowerUps.innerHTML += "<button class=\"extraPowerUpButton\" onclick=\"powerUp(" + extraPowerMultiplier + ", powerUpCost*" + extraPowerCost + ")\">Power Up x" + extraPowerMultiplier + " ($<label class=\"extraPowerPrice\">" + dollars(extraPowerCost*powerUpCost) + "</label>)</button> ";
+                extraPowerMultiplier *= 4;
+                extraPowerCost *= 3;
+                if (document.getElementsByClassName("extraPowerUpButton").length % 4 == 0) {
+                    extraPowerUps.innerHTML += "<br><br>";
                 }
             }
         }
