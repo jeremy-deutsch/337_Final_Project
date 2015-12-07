@@ -53,7 +53,7 @@
         var money = document.getElementById("money");
 
 
-		/*//--------------------------------------------------------------------------
+		//--------------------------------------------------------------------------
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function () {
 			xhttp.onreadystatechange = function() {
@@ -67,11 +67,9 @@
 			};
 			xhttp.open("GET", "button.php?username=" + document.getElementById("user"), true);
 			xhttp.send();
-
-
 		}
 		//--------------------------------------------------------------------------
-		*/
+
 
 
 
