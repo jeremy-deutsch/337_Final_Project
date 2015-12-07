@@ -18,11 +18,17 @@
            }
        }
 
-       public function getButtonsArray() {
-           $sql = "SELECT username FROM users JOIN button_amounts ON button_amounts.username = users.username WHERE users.username = " . $username . ";";
+       public function getButtonsArray($username) {
+           $sql = this->DB->prepare("SELECT * FROM button_amounts WHERE username='$username'");
            $stmt = $this->DB->prepare($sql);
-
+           $stmt->execute ();
+   		   $array = $stmt->fetchAll ( PDO::FETCH_ASSOC );
+   		   return $array;
        }
 
 
     }
+
+    $buttonStuff = new button ();
+    echo json_encode($buttonStuff->getButtonsArray($username));
+    ?>

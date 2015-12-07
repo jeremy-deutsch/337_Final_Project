@@ -38,10 +38,10 @@
         $user = $_POST['newUser'];
         $pass = $_POST['newPass'];
 
-        register($user, $pass);
+        $successfulRegister = register($user, $pass);
 
-        if(verified($user, $pass)) {
-            echo 'User created. Go back to login <br>';
+        if(verified($user, $pass) && $successfulRegister == true) {
+                echo 'User created. Go back to login <br>';
         }
         else {
             echo 'Error: failed to create user <br>';
@@ -80,13 +80,14 @@
 
 
 
-            $sql = "INSERT INTO button_amounts(username, cash, codeDollars, linesPer, totalLines, counter, speed, coffee, time_) VALUES('$username', 0, 0, 0, 0, 0, 0, 0, 0)";
+            $sql = "INSERT INTO button_amounts(username, lines_, hands_, cups_, seconds_, money_) VALUES('$username', 0, 0, 0, 0, 0)";
             $db->exec($sql);
         }
         else {
             echo "Username already exists <br>";
+            return false;
         }
-        return $hash;
+        return true;
 
     }
 

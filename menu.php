@@ -1,9 +1,5 @@
 <?php
-
 	session_start();
-
-	$user = $_SESSION['user'];
-
 
 ?>
 <html>
@@ -29,11 +25,12 @@
 <body>
 	<div id="logout">
 		<form method="post" action=logout.php>
-			<input type="submit" name="logout" value="logout">
+			<input type="submit" name="logout" value="Logout">
 		</form>
 	</div>
 
 	<div id="menu">
+	<h2>Welcome <label id="user"><?php echo $_SESSION['user'];?></label><br></h2>
 	<p>You've written <label id="lines">0</label> lines of code!</p>
     <p>You've grown <label id="hands">0</label> extra hands.</p>
     <p>You've had <label id="cups">0</label> cups of coffee.</p>
@@ -46,11 +43,37 @@
 
 	<div id="extraPowerUps"></div>
     <script type="text/javascript">
+
+
+
         var codeValue = document.getElementById("codeValue");
         var lines = document.getElementById("lines");
         var hands = document.getElementById("hands");
         var cups = document.getElementById("cups");
         var money = document.getElementById("money");
+
+		
+		/*//--------------------------------------------------------------------------
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function () {
+			xhttp.onreadystatechange = function() {
+				if (xhttp.readyState == 4 && xhttp.status == 200) {
+					array = JSON.parse(xhttp.responseText);
+					lines = array[0]['lines_'];
+					hands = array[0]['hands_'];
+					cups = array[0]['cups_'];
+					money = array[0]['money_'];
+				}
+			};
+			xhttp.open("GET", "button.php?username=" + document.getElementById("user"), true);
+			xhttp.send();
+
+
+		}
+		//--------------------------------------------------------------------------
+		*/
+
+
 
 
         var sellCodeButton = document.getElementById("sellCodeButton");

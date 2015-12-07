@@ -9,12 +9,9 @@ CREATE TABLE users (
 
 CREATE TABLE button_amounts (
         username varchar(15),
-        cash int not null,
-        codeDollars int not null,
-        linesPer int not null,
-        totalLines int not null,
-        counter int not null,
-        speed int not null,
-        coffee int not null,
-        time_ int not null
+        lines_ int not null,
+        hands_ int not null,
+        cups_ int not null,
+        seconds_ int not null,
+        money_ int not null
 );
