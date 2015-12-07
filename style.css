@@ -1,5 +1,7 @@
 body {
     background-color: blue;
+    color: white;
+    font-family: arial;
 }
 #loginform {
     width: 200px;
@@ -30,4 +32,16 @@ body {
     background-color: black;
     text-decoration: none;
     color: white;
+}
+
+.otherButton {
+    visibility: hidden;
+}
+
+#sellCodeButton {
+    visibility: visible;
+}
+
+.extraPowerUpButton {
+    visibility: visible;
 }

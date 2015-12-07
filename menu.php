@@ -7,19 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<title>We made an idle game!</title>
 
-    <style type="text/css">
-    button {
-        visibility: hidden;
-    }
 
-    #sellCodeButton {
-        visibility: visible;
-    }
-
-    .extraPowerUpButton {
-        visibility: visible;
-    }
-    </style>
 
 </head>
 <body>
@@ -36,9 +24,9 @@
     <p>You've had <label id="cups">0</label> cups of coffee.</p>
 	<p>You've been coding for <label id="seconds">0</label> seconds.</p>
     <p>You've made $<label id="money">0</label>.</p>
-    <button id="sellCodeButton" onclick="sellCode()" style>Sell Code for $<label id="codeValue">0</label></button>
-	<button id="powerUpButton" onclick="powerUp(1, powerUpCost)">Power Up! ($<label id="powerUpPrice">5</label>)</button>
-	<button id="speedUpButton" onclick="speedUp(1, speedUpCost)">Speed Up! ($<label id="speedUpPrice">15</label>)</button><br><br>
+    <button id="sellCodeButton" onclick="sellCode()" class="otherButton">Sell Code for $<label id="codeValue">0</label></button>
+	<button id="powerUpButton" onclick="powerUp(1, powerUpCost)" class="otherButton">Power Up! ($<label id="powerUpPrice">5</label>)</button>
+	<button id="speedUpButton" onclick="speedUp(1, speedUpCost)" class="otherButton">Speed Up! ($<label id="speedUpPrice">15</label>)</button><br><br>
 
 
 	<div id="extraPowerUps"></div>
@@ -55,7 +43,7 @@
 
 		//--------------------------------------------------------------------------
 		var xhttp = new XMLHttpRequest();
-		xhttp.onreadystatechange = function () {
+
 			xhttp.onreadystatechange = function() {
 				if (xhttp.readyState == 4 && xhttp.status == 200) {
 					array = JSON.parse(xhttp.responseText);
@@ -67,8 +55,8 @@
 			};
 			xhttp.open("GET", "button.php?username=" + document.getElementById("user") + "&lines=" + document.getElementById("lines") + "&hands=" + document.getElementById("hands") + "&cups=" + document.getElementById("cups") + "&money=" + document.getElementById("money"), true);
 			xhttp.send();
-		}
-		//--------------------------------------------------------------------------
+
+		//--------------------------------------------------------------------------*/
 
 
 
@@ -125,11 +113,6 @@
             }
         }
 
-        function setLines() {
-            totalLines += linesPer;
-            lines.innerHTML = totalLines;
-        }
-
         function powerUp(power, cost) {
         	if (cash >= (cost)) {
                 cash -= cost;
@@ -137,6 +120,7 @@
                 for (var i = 0; i < power; i++) {
                     powerUpCost *= 1.01;
                 }
+                powerUpCost *= Math.pow(1.001, power);
                 powerUpCost = dollars(powerUpCost);
                 powerUpPrice.innerHTML = powerUpCost;
                 for (var i = 0; i < document.getElementsByClassName("extraPowerPrice").length; i++) {
@@ -158,7 +142,6 @@
                     speed = speed/2;
                     coffee++;
                     speedUpCost *= 10;
-
                 }
                 speedUpCost = Math.floor(speedUpCost * 100) / 100;
                 if (speed <= 1) {
@@ -196,7 +179,7 @@
                 }
             }
             while (cash >= (powerUpCost * extraPowerCost)) {
-                extraPowerUps.innerHTML += "<button class=\"extraPowerUpButton\" onclick=\"powerUp(" + extraPowerMultiplier + ", powerUpCost*" + extraPowerCost + ")\">Power Up x" + extraPowerMultiplier + " ($<label class=\"extraPowerPrice\">" + dollars(extraPowerCost*powerUpCost) + "</label>)</button> ";
+                extraPowerUps.innerHTML += "<button class=\"extraPowerUpButton\" onclick=\"powerUp(" + extraPowerMultiplier + ", powerUpCost*" + extraPowerCost + ")\">Power Up x" + extraPowerMultiplier + " ($<label class=\"extraPowerPrice\">" + dollars(extraPowerCost*powerUpCost) + "</label>)</button> "; //Makes new buttons
                 extraPowerMultiplier *= 4;
                 extraPowerCost *= 3;
                 if (document.getElementsByClassName("extraPowerUpButton").length % 4 == 0) {
