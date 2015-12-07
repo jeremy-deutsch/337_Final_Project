@@ -26,9 +26,18 @@
    		   return $array;
        }
 
+       public function updateButtons($username, $lines, $hands, $cups, $money) {
+           $sql = this->DB->prepare("UPDATE button_amounts SET lines_='$lines', hands_='$hands', cups_='$cups', money_='$money' WHERE username='$username';");
+           $stmt = $this->DB->prepare($sql);
+           $stmt->execute();
+
+       }
+
 
     }
 
+
     $buttonStuff = new button ();
     echo json_encode($buttonStuff->getButtonsArray($username));
+    $buttonStuff->updateButtons($username, $lines, $hands, $cups, $money);
     ?>
