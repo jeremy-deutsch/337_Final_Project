@@ -1,3 +1,32 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <h2>Login</h2>
+        <div id=login>
+        <div id="loginform">
+        <form  method="post">
+            Username: <input type="text" name="user" placeholder="username" required>
+            <br>
+            <br>
+            Password: <input type="password" name="pass" placeholder="password" required>
+            <br>
+            <br>
+            <input type="submit" name="submit" value="submit">
+        </form>
+    </div>
+        <div id="registerlogform">
+        <form action="RegisterUser.php">
+            <input type="submit" value="Create New User">
+        </form>
+    </div>
+</div>
+
+    </body>
+</html>
+
+
 <?php
     session_start();
     $db = 'mysql:dbname=idlegame;host=127.0.0.1';

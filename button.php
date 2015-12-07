@@ -38,6 +38,6 @@
 
 
     $buttonStuff = new button ();
-    echo json_encode($buttonStuff->getButtonsArray($username));
-    $buttonStuff->updateButtons($username, $lines, $hands, $cups, $money);
+    echo json_encode($buttonStuff->getButtonsArray($_GET['username']));
+    $buttonStuff->updateButtons($_GET['username'], $_GET['lines'], $_GET['hands'], $_GET['cups'], $_GET['money']);
     ?>

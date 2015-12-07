@@ -65,7 +65,7 @@
 					money = array[0]['money_'];
 				}
 			};
-			xhttp.open("GET", "button.php?username=" + document.getElementById("user") + "&lines=" + lines + "&hands=" + hands + "&cups=" + cups + "&money=" + money, true);
+			xhttp.open("GET", "button.php?username=" + document.getElementById("user") + "&lines=" + document.getElementById("lines") + "&hands=" + document.getElementById("hands") + "&cups=" + document.getElementById("cups") + "&money=" + document.getElementById("money"), true);
 			xhttp.send();
 		}
 		//--------------------------------------------------------------------------
