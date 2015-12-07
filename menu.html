@@ -1,4 +1,11 @@
-<?php session_start(); ?>
+<?php
+
+	session_start();
+
+	$user = $_SESSION['user'];
+
+
+?>
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="style.css">
@@ -20,6 +27,11 @@
 
 </head>
 <body>
+	<div id="logout">
+		<form method="post" action=logout.php>
+			<input type="submit" name="logout" value="logout">
+		</form>
+	</div>
 
 	<div id="menu">
 	<p>You've written <label id="lines">0</label> lines of code!</p>
@@ -30,12 +42,8 @@
     <button id="sellCodeButton" onclick="sellCode()" style>Sell Code for $<label id="codeValue">0</label></button>
 	<button id="powerUpButton" onclick="powerUp(1, powerUpCost)">Power Up! ($<label id="powerUpPrice">5</label>)</button>
 	<button id="speedUpButton" onclick="speedUp(1, speedUpCost)">Speed Up! ($<label id="speedUpPrice">15</label>)</button><br><br>
-</div>
-	<div id="logout">
-		<form method="post" action=logout.php>
-			<input type="submit" name="logout" value="logout">
-		</form>
-	</div>
+
+
 	<div id="extraPowerUps"></div>
     <script type="text/javascript">
         var codeValue = document.getElementById("codeValue");
@@ -180,5 +188,6 @@
             return Math.floor(num * 100) / 100;
         }
     </script>
+	</div>
 </body>
 </html>
