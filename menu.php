@@ -52,7 +52,7 @@
         var cups = document.getElementById("cups");
         var money = document.getElementById("money");
 
-		
+
 		/*//--------------------------------------------------------------------------
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function () {
