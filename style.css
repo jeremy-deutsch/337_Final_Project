@@ -1,0 +1,25 @@
+body {
+    background-color: blue;
+}
+#loginform {
+    width: 200px;
+    border-style: groove;
+    border-width:medium;
+    margin: 10px;
+    padding: 10px;
+    float: left;
+}
+
+#registerlogform {
+    float: right;
+    height: 0px;
+}
+
+#logout {
+    float: right;
+    height: 0px;
+}
+
+#menu {
+    float:left;
+}

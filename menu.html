@@ -1,7 +1,9 @@
+<?php session_start(); ?>
 <html>
 <head>
+	<link rel="stylesheet" type="text/css" href="style.css">
 	<title>We made an idle game!</title>
-    
+
     <style type="text/css">
     button {
         visibility: hidden;
@@ -18,6 +20,8 @@
 
 </head>
 <body>
+
+	<div id="menu">
 	<p>You've written <label id="lines">0</label> lines of code!</p>
     <p>You've grown <label id="hands">0</label> extra hands.</p>
     <p>You've had <label id="cups">0</label> cups of coffee.</p>
@@ -26,7 +30,13 @@
     <button id="sellCodeButton" onclick="sellCode()" style>Sell Code for $<label id="codeValue">0</label></button>
 	<button id="powerUpButton" onclick="powerUp(1, powerUpCost)">Power Up! ($<label id="powerUpPrice">5</label>)</button>
 	<button id="speedUpButton" onclick="speedUp(1, speedUpCost)">Speed Up! ($<label id="speedUpPrice">15</label>)</button><br><br>
-    <div id="extraPowerUps"></div>
+</div>
+	<div id="logout">
+		<form method="post" action=logout.php>
+			<input type="submit" name="logout" value="logout">
+		</form>
+	</div>
+	<div id="extraPowerUps"></div>
     <script type="text/javascript">
         var codeValue = document.getElementById("codeValue");
         var lines = document.getElementById("lines");
@@ -73,7 +83,7 @@
             time++;
             seconds.innerHTML = time;
         }
-        
+
         function update() {
             counter++;
             if (counter >= speed) {
@@ -97,7 +107,7 @@
                 linesPer += power;
                 for (var i = 0; i < power; i++) {
                     powerUpCost *= 1.01;
-                }                
+                }
                 powerUpCost = dollars(powerUpCost);
                 powerUpPrice.innerHTML = powerUpCost;
                 for (var i = 0; i < document.getElementsByClassName("extraPowerPrice").length; i++) {
@@ -110,7 +120,7 @@
         }
 
         function speedUp(accel, cost) {
-            
+
             if (cash >= cost) {
                 cash -= cost;
                 cash = dollars(cash);

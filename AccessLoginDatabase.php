@@ -16,6 +16,7 @@
     if(isset($_POST['submit'])) {
         $user = $_POST['user'];
         $pass = $_POST['pass'];
+        $_SESSION['user'] = $user;
     }
 
     if(verify($user, $pass)) {

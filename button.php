@@ -21,11 +21,7 @@
        public function getButtonsArray() {
            $sql = "SELECT username FROM users JOIN button_amounts ON button_amounts.username = users.username WHERE users.username = " . $username . ";";
            $stmt = $this->DB->prepare($sql);
-       }
 
-       public function countIncrement($button) {
-           $sql = "UPDATE button_amounts " . $button . " JOIN users ON button_amounts.username = users.username WHERE users.username = " . $username . " SET " . $button "=" . $button "+1;";
-           $stmt = $this->DB->prepare($sql)
        }
 
 

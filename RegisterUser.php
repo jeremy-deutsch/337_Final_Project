@@ -1,11 +1,21 @@
 <html>
-    <head> Create New User </head>
+    <head> <link rel="stylesheet" type="text/css" href="style.css"> </head>
     <body>
+        <h2>Create New User </h2>
+        <div id="loginform">
         <form method="post">
             New Username: <input type="text" name="newUser" required>
+            <br><br>
             New Password: <input type="text" name="newPass" required>
+            <br><br>
             <input type="submit" name="submit" value="submit">
         </form>
+    </div>
+        <div id="registerlogform">
+        <form action="login.html">
+            <input type="submit" value="Login">
+        </form>
+    </div>
     </body>
 </html>
 
@@ -31,10 +41,10 @@
         register($user, $pass);
 
         if(verified($user, $pass)) {
-            echo 'User created. Go back to login';
+            echo 'User created. Go back to login <br>';
         }
         else {
-            echo 'Error: failed to create user';
+            echo 'Error: failed to create user <br>';
         }
     }
 
@@ -48,14 +58,13 @@
         $stmt->execute();
         $hash = $stmt->fetchColumn();
 
-        echo $username . '----<br>';
-        echo $password . '----<br>';
-        echo '<br>       *--- ' . $hash . ' ---*       ';
 
         return password_verify($password,  $hash);
     }
 
     function register($username, $password) {
+        $username = htmlspecialchars($username);
+        $password = htmlspecialchars($password);
         global $db;
 
         $currentTime = time();
@@ -68,9 +77,14 @@
         if($numUsers == "0" ) {
             $sql = "INSERT INTO users(username, password, login) VALUES('$username', '$hash', '$currentTime')";
             $db->exec($sql);
+
+
+
+            $sql = "INSERT INTO button_amounts(username, cash, codeDollars, linesPer, totalLines, counter, speed, coffee, time_) VALUES('$username', 0, 0, 0, 0, 0, 0, 0, 0)";
+            $db->exec($sql);
         }
         else {
-            echo "Username already exists";
+            echo "Username already exists <br>";
         }
         return $hash;
 
