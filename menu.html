@@ -86,18 +86,11 @@
             }
         }
 
-        function setLines() {
-            totalLines += linesPer;
-            lines.innerHTML = totalLines;
-        }
-
         function powerUp(power, cost) {
         	if (cash >= (cost)) {
                 cash -= cost;
                 linesPer += power;
-                for (var i = 0; i < power; i++) {
-                    powerUpCost *= 1.01;
-                }                
+                powerUpCost *= Math.pow(1.001, power);
                 powerUpCost = dollars(powerUpCost);
                 powerUpPrice.innerHTML = powerUpCost;
                 for (var i = 0; i < document.getElementsByClassName("extraPowerPrice").length; i++) {
@@ -119,7 +112,6 @@
                     speed = speed/2;
                     coffee++;
                     speedUpCost *= 10;
-
                 }
                 speedUpCost = Math.floor(speedUpCost * 100) / 100;
                 if (speed <= 1) {
@@ -157,7 +149,7 @@
                 }
             }
             while (cash >= (powerUpCost * extraPowerCost)) {
-                extraPowerUps.innerHTML += "<button class=\"extraPowerUpButton\" onclick=\"powerUp(" + extraPowerMultiplier + ", powerUpCost*" + extraPowerCost + ")\">Power Up x" + extraPowerMultiplier + " ($<label class=\"extraPowerPrice\">" + dollars(extraPowerCost*powerUpCost) + "</label>)</button> ";
+                extraPowerUps.innerHTML += "<button class=\"extraPowerUpButton\" onclick=\"powerUp(" + extraPowerMultiplier + ", powerUpCost*" + extraPowerCost + ")\">Power Up x" + extraPowerMultiplier + " ($<label class=\"extraPowerPrice\">" + dollars(extraPowerCost*powerUpCost) + "</label>)</button> "; //Makes new buttons
                 extraPowerMultiplier *= 4;
                 extraPowerCost *= 3;
                 if (document.getElementsByClassName("extraPowerUpButton").length % 4 == 0) {
