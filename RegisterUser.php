@@ -6,7 +6,7 @@
         <form method="post">
             New Username: <input type="text" name="newUser" required>
             <br><br>
-            New Password: <input type="text" name="newPass" required>
+            New Password: <input type="password" name="newPass" required>
             <br><br>
             <input type="submit" name="submit" value="submit">
         </form>
