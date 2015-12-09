@@ -33,7 +33,8 @@
 	<button id="speedUpButton" onclick="speedUp(1, speedUpCost)" class="otherButton">Speed Up! ($<label id="speedUpPrice"><?= 15 * pow(10, $_SESSION['cups']) ?></label>)</button><br><br>
 
 
-	<div id="extraPowerUps"></div>
+	<div id="extraPowerUps"></div><br>
+    <button id="resetButton" onclick="resetGame()">Reset Game</button>
     <script type="text/javascript">
 
 
@@ -82,6 +83,7 @@
         setInterval(setSeconds, 1000);
 
         window.onload = powerUp(0, 0);
+        window.onload = speedUp(0, 0);
         window.onload = checkButtons();
 
         function setSeconds() {
@@ -130,6 +132,7 @@
                 speedUpCost = Math.floor(speedUpCost * 100) / 100;
                 if (speed <= 1) {
                     speedUpButton.disabled = true;
+                    speedUpButton.style.color = '#a3a3c2';
                     speedUpPrice.innerHTML = "MAX";
                 }
                 else {
@@ -186,6 +189,27 @@
             document.getElementById("moneyPHP").value = cash;
         }
 
+        function resetGame() {
+            if (confirm("Are you sure you want to reset your game?")) {
+                totalLines = 0;
+                time = 0;
+                linesPer = 1;
+                coffee = 0;
+                cash = 0;
+                speed = 10;
+                speedUpCost = 15;
+                numButtons = 0;
+                speedUpButton.style.color = 'white';
+                speedUpButton.disabled = false;
+                powerUpButton.style.visibility = 'hidden';
+                speedUpButton.style.visibility = 'hidden';
+                extraPowerMultiplier = 5;
+                extraPowerCost = 4;
+                extraPowerUps.innerHTML = "";
+                powerUp(0, 0);
+                speedUp(0, 0);
+            }
+        }
     </script>
 	</div>
 </body>
