@@ -34,7 +34,9 @@
 
 
 	<div id="extraPowerUps"></div><br>
-    <button id="resetButton" onclick="resetGame()">Reset Game</button>
+    <button id="resetButton" onclick="resetGame()">Reset Game</button><br><br>
+    </div>
+    <div id="fancyText">></div>
     <script type="text/javascript">
 
 
@@ -73,6 +75,9 @@
         var coffee = <?= $_SESSION['cups'] ?>;
         setInterval(update, 100);
 
+        var fancyText = document.getElementById("fancyText");
+        var printCounter = 0;
+
         var numButtons = 0;
         var buttonCosts = [5, 15];
         var buttonsArray = [powerUpButton, speedUpButton];
@@ -99,8 +104,18 @@
                 codeDollars = dollars(totalLines * Math.log(totalLines));
                 //console.log("multiplier: " + Math.pow(1.0000001, totalLines));
                 codeValue.innerHTML = codeDollars;
+                printStuff();
                 counter = 0;
             }
+        }
+
+        function printStuff() {
+            printCounter++;
+            if (printCounter >= 20) {
+                fancyText.innerHTML = "\>";
+                printCounter = 0;
+            }
+            fancyText.innerHTML = Math.random().toString(36).substring(2) + Math.random().toString(36).substring(2) + Math.random().toString(36).substring(2) + "<br>" + fancyText.innerHTML;
         }
 
         function powerUp(power, cost) {
@@ -211,6 +226,5 @@
             }
         }
     </script>
-	</div>
 </body>
 </html>

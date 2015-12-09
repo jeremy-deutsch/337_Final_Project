@@ -1,6 +1,6 @@
 body {
-    background-color: #000080;
-    color: white;
+    background-color: black;
+    color:  #009933;
     font-family: arial;
 }
 
@@ -9,13 +9,13 @@ button {
   font-family: Arial;
   color: #ffffff;
   font-size: 14px;
-  background: #3c7aa3;
+  background: #009933;
   padding: 10px 20px 10px 20px;
   text-decoration: none;
 }
 
 button:hover {
-  background: #3cb0fd;
+  background: #006622;
   text-decoration: none;
 }
 
@@ -60,4 +60,9 @@ button:hover {
 
 .extraPowerUpButton {
     visibility: visible;
+}
+
+#fancyText {
+    padding: 40px;
+    float: left;
 }
