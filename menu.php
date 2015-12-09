@@ -5,15 +5,19 @@
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="style.css">
-	<title>We made an idle game!</title>
-
+	<title id="title">We made an idle game!</title>
 
 
 </head>
 <body>
 	<div id="logout">
 		<form method="post" action=logout.php>
-			<input type="submit" name="logout" value="Logout">
+            <hidden name="lines" id="linesPHP" value="">
+            <hidden name="hands" id="handsPHP" value="">
+            <hidden name="cups" id="cupsPHP" value="">
+            <hidden name="seconds" id="secondsPHP" value="">
+            <hidden name="money" id="moneyPHP" value="">             
+			<input onclick="saveGame()" type="submit" name="logout" value="Logout">
 		</form>
 	</div>
 
@@ -31,6 +35,7 @@
 
 	<div id="extraPowerUps"></div>
     <script type="text/javascript">
+    
 
 
         var codeValue = document.getElementById("codeValue");
@@ -38,25 +43,6 @@
         var hands = document.getElementById("hands");
         var cups = document.getElementById("cups");
         var money = document.getElementById("money");
-
-
-		//--------------------------------------------------------------------------
-		var xhttp = new XMLHttpRequest();
-
-			xhttp.onreadystatechange = function() {
-				if (xhttp.readyState == 4 && xhttp.status == 200) {
-					array = JSON.parse(xhttp.responseText);
-					lines = array[0]['lines_'];
-					hands = array[0]['hands_'];
-					cups = array[0]['cups_'];
-					money = array[0]['money_'];
-				}
-			};
-			xhttp.open("GET", "button.php?username=" + document.getElementById("user") + "&lines=" + document.getElementById("lines") + "&hands=" + document.getElementById("hands") + "&cups=" + document.getElementById("cups") + "&money=" + document.getElementById("money"), true);
-			xhttp.send();
-
-		//--------------------------------------------------------------------------*/
-
 
 
 
@@ -91,7 +77,7 @@
         var buttonsArray = [powerUpButton, speedUpButton];
 
         var seconds = document.getElementById("seconds");
-        var time = 0;
+        var time = <?= $_SESSION['seconds'] ?>;
 
         setInterval(setSeconds, 1000);
 
@@ -189,6 +175,16 @@
         function dollars(num) {
             return Math.floor(num * 100) / 100;
         }
+
+
+        function saveGame() {
+            document.getElementById("linesPHP").value = totalLines;
+            document.getElementById("handsPHP").value = linesPer - 1;
+            document.getElementById("cupsPHP").value = coffee;
+            document.getElementById("secondsPHP").value = time;
+            document.getElementById("moneyPHP").value = cash;
+        }
+
     </script>
 	</div>
 </body>
