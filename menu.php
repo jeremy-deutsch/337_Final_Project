@@ -12,11 +12,11 @@
 <body>
 	<div id="logout">
 		<form method="post" action=logout.php>
-            <hidden name="lines" id="linesPHP" value="">
-            <hidden name="hands" id="handsPHP" value="">
-            <hidden name="cups" id="cupsPHP" value="">
-            <hidden name="seconds" id="secondsPHP" value="">
-            <hidden name="money" id="moneyPHP" value="">             
+            <input type="hidden" name="lines" id="linesPHP" value="">
+            <input type="hidden" name="hands" id="handsPHP" value="">
+            <input type="hidden" name="cups" id="cupsPHP" value="">
+            <input type="hidden" name="seconds" id="secondsPHP" value="">
+            <input type="hidden" name="money" id="moneyPHP" value="">
 			<input onclick="saveGame()" type="submit" name="logout" value="Logout">
 		</form>
 	</div>
@@ -35,7 +35,7 @@
 
 	<div id="extraPowerUps"></div>
     <script type="text/javascript">
-    
+
 
 
         var codeValue = document.getElementById("codeValue");

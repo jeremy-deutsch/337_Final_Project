@@ -38,19 +38,19 @@
         global $db;
         $sql = "UPDATE button_amounts SET cups_='$cups' WHERE username='$user';";
         $db->exec($sql);
-}
+    }
 
     function setSeconds($user, $seconds) {
         global $db;
         $sql = "UPDATE button_amounts SET seconds_='$seconds' WHERE username='$user';";
         $db->exec($sql);
-}
+    }
 
     function setMoney($user, $money) {
         global $db;
         $sql = "UPDATE button_amounts SET money_='$money' WHERE username='$user';";
         $db->exec($sql);
-}
+    }
 
     session_destroy();
     unset($_SESSION['user']);
