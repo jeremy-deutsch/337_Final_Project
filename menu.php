@@ -55,7 +55,7 @@
 
 
         var powerUpPrice = document.getElementById("powerUpPrice");
-        var powerUpCost = 5 * Math.pow(1.001, <?= $_SESSION['hands'] ?>);
+        var powerUpCost = 5 * <?= ($_SESSION['hands'] + 1) * log($_SESSION['hands'] + 1) * log($_SESSION['hands'] + 1) ?>;//Math.pow(1.001, <?= $_SESSION['hands'] ?>);
         var speedUpPrice = document.getElementById("speedUpPrice");
         var speedUpCost = 15 * Math.pow(10, <?= $_SESSION['cups'] ?>);
 
@@ -81,8 +81,8 @@
 
         setInterval(setSeconds, 1000);
 
-        window.onload = checkButtons();
         window.onload = powerUp(0, 0);
+        window.onload = checkButtons();
 
         function setSeconds() {
             time++;
@@ -94,7 +94,7 @@
             if (counter >= speed) {
                 totalLines += linesPer;
                 lines.innerHTML = totalLines;
-                codeDollars = dollars(totalLines * (Math.pow(1.000001, totalLines)));
+                codeDollars = dollars(totalLines * Math.log(totalLines));
                 //console.log("multiplier: " + Math.pow(1.0000001, totalLines));
                 codeValue.innerHTML = codeDollars;
                 counter = 0;
@@ -105,7 +105,7 @@
         	if (cash >= (cost)) {
                 cash -= cost;
                 linesPer += power;
-                powerUpCost *= Math.pow(1.001, power);
+                powerUpCost = dollars(5 * linesPer * Math.log(linesPer) * Math.log(linesPer)) + 5;
                 powerUpPrice.innerHTML = dollars(powerUpCost);
                 for (var i = 0; i < document.getElementsByClassName("extraPowerPrice").length; i++) {
                     document.getElementsByClassName("extraPowerPrice")[i].innerHTML = dollars(powerUpCost * 4 * Math.pow(3, i));
@@ -130,6 +130,7 @@
                 speedUpCost = Math.floor(speedUpCost * 100) / 100;
                 if (speed <= 1) {
                     speedUpButton.disabled = true;
+                    speedUpPrice.innerHTML = "MAX";
                 }
                 else {
                     speedUpPrice.innerHTML = speedUpCost;
