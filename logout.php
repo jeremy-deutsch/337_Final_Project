@@ -14,13 +14,13 @@
         exit();
     }
 
-    /*
-    setLines($_SESSION['user'], $_SESSION['lines']);
-    setHands($_SESSION['user'], $_SESSION['hands']);
-    setCoffee($_SESSION['user'], $_SESSION['cups']);
-    setSeconds($_SESSION['user'], $_SESSION['seconds']);
-    setMoney($_SESSION['user'], $_SESSION['money']);
-    */
+
+    setLines($_SESSION['user'], $_POST['lines']);
+    setHands($_SESSION['user'], $_POST['hands']);
+    setCoffee($_SESSION['user'], $_POST['cups']);
+    setSeconds($_SESSION['user'], $_POST['seconds']);
+    setMoney($_SESSION['user'], $_POST['money']);
+
 
     function setLines($user, $lines) {
         global $db;
