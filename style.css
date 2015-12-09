@@ -1,8 +1,24 @@
 body {
-    background-color: blue;
+    background-color: #000080;
     color: white;
     font-family: arial;
 }
+
+button {
+  border-radius: 5px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 14px;
+  background: #3c7aa3;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+button:hover {
+  background: #3cb0fd;
+  text-decoration: none;
+}
+
 #loginform {
     width: 200px;
     border-style: groove;

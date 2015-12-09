@@ -18,20 +18,19 @@
 	</div>
 
 	<div id="menu">
-	<h2>Welcome <label id="user"><?php echo $_SESSION['user'];?></label><br></h2>
-	<p>You've written <label id="lines">0</label> lines of code!</p>
-    <p>You've grown <label id="hands">0</label> extra hands.</p>
-    <p>You've had <label id="cups">0</label> cups of coffee.</p>
-	<p>You've been coding for <label id="seconds">0</label> seconds.</p>
-    <p>You've made $<label id="money">0</label>.</p>
+	<h2>Welcome, <label id="user"><?= $_SESSION['user'];?></label>!<br></h2>
+	<p>You've written <label id="lines"><?= $_SESSION['lines'] ?></label> lines of code!</p>
+    <p>You've grown <label id="hands"><?= $_SESSION['hands'] ?></label> extra hands.</p>
+    <p>You've had <label id="cups"><?= $_SESSION['cups'] ?></label> cups of coffee.</p>
+	<p>You've been coding for <label id="seconds"><?= $_SESSION['seconds'] ?></label> seconds.</p>
+    <p>You've made $<label id="money"><?= $_SESSION['money'] ?></label>.</p>
     <button id="sellCodeButton" onclick="sellCode()" class="otherButton">Sell Code for $<label id="codeValue">0</label></button>
 	<button id="powerUpButton" onclick="powerUp(1, powerUpCost)" class="otherButton">Power Up! ($<label id="powerUpPrice">5</label>)</button>
-	<button id="speedUpButton" onclick="speedUp(1, speedUpCost)" class="otherButton">Speed Up! ($<label id="speedUpPrice">15</label>)</button><br><br>
+	<button id="speedUpButton" onclick="speedUp(1, speedUpCost)" class="otherButton">Speed Up! ($<label id="speedUpPrice"><?= 15 * pow(10, $_SESSION['cups']) ?></label>)</button><br><br>
 
 
 	<div id="extraPowerUps"></div>
     <script type="text/javascript">
-
 
 
         var codeValue = document.getElementById("codeValue");
@@ -70,31 +69,34 @@
 
 
         var powerUpPrice = document.getElementById("powerUpPrice");
-        var powerUpCost = 5;
+        var powerUpCost = 5 * Math.pow(1.001, <?= $_SESSION['hands'] ?>);
         var speedUpPrice = document.getElementById("speedUpPrice");
-        var speedUpCost = 15;
+        var speedUpCost = 15 * Math.pow(10, <?= $_SESSION['cups'] ?>);
 
         var extraPowerMultiplier = 5;
         var extraPowerCost = 4;
         var extraPowerUps = document.getElementById("extraPowerUps");
 
-        var cash = 0.00;
+        var cash = <?= $_SESSION['money'] ?>;
         var codeDollars = 0.00;
-        var linesPer = 1;
-        var totalLines = 0.00;
+        var linesPer = 1 + <?= $_SESSION['hands'] ?>;
+        var totalLines = <?= $_SESSION['lines'] ?>;
         var counter = 0;
-        var speed = 10;
-        var coffee = 0;
+        var speed = <?= 10 / pow(2, $_SESSION['cups']) ?>;
+        var coffee = <?= $_SESSION['cups'] ?>;
         setInterval(update, 100);
 
         var numButtons = 0;
-        var buttonCosts = [powerUpCost, speedUpCost];
+        var buttonCosts = [5, 15];
         var buttonsArray = [powerUpButton, speedUpButton];
 
         var seconds = document.getElementById("seconds");
         var time = 0;
 
         setInterval(setSeconds, 1000);
+
+        window.onload = checkButtons();
+        window.onload = powerUp(0, 0);
 
         function setSeconds() {
             time++;
@@ -117,12 +119,8 @@
         	if (cash >= (cost)) {
                 cash -= cost;
                 linesPer += power;
-                for (var i = 0; i < power; i++) {
-                    powerUpCost *= 1.01;
-                }
                 powerUpCost *= Math.pow(1.001, power);
-                powerUpCost = dollars(powerUpCost);
-                powerUpPrice.innerHTML = powerUpCost;
+                powerUpPrice.innerHTML = dollars(powerUpCost);
                 for (var i = 0; i < document.getElementsByClassName("extraPowerPrice").length; i++) {
                     document.getElementsByClassName("extraPowerPrice")[i].innerHTML = dollars(powerUpCost * 4 * Math.pow(3, i));
                 }
